@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="PanLoco.Views.ClienteNuevoPage"
+		Title="Cliente">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Guardar" Clicked="Save_Clicked" />
+        <ToolbarItem Text="Eliminar" Clicked="Delete_Clicked" />
+        <!--<ToolbarItem Text="Cerrar" Clicked="Close_Clicked" />-->
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+        <TableView>
+            <TableRoot>
+
+
+                <TableSection Title="Cliente">
+                    <EntryCell Label="Nombre: "  Text="{Binding Item.NombreDeFantasia}" HorizontalTextAlignment="Center" XAlign="Center"/>
+                    <EntryCell Label="Nombre Completo: "  Text="{Binding Item.NombreCompleto}" />
+                </TableSection>
+                <TableSection Title="Precios">
+                    <EntryCell Label="Descuento: "  Text="{Binding Item.Descuento}" Keyboard="Numeric" />
+                    <SwitchCell Text="Es Mayorista: " On="{Binding Item.Mayorista}" ></SwitchCell>
+                </TableSection>
+                <TableSection Title="Contacto">
+                    <EntryCell Label="Teléfono: " Keyboard="Telephone" Text="{Binding Item.Telefono}"  />
+                    <EntryCell Label="Horario: "   Keyboard="Numeric" Text="{Binding Item.Horario}"  />
+                </TableSection>
+            </TableRoot>
+        </TableView>
+		
+	</ContentPage.Content>
+</ContentPage>

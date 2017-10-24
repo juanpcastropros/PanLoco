@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="PanLoco.App">
+  <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="PrimaryDark">#1976D2</Color>
+            <Color x:Key="Accent">#96d1ff</Color>
+            <Color x:Key="LightBackgroundColor">#FAFAFA</Color>
+            <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
+            <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
+            <Color x:Key="LightTextColor">#999999</Color>
+            <!-- Page Size for Lists-->
+
+            <x:String x:Key="ProductFlowPageSize">25</x:String>
+            <x:String x:Key="ProductCompactPageSize">50</x:String>
+            <x:String x:Key="Font">Seogoe UI</x:String>
+
+            <!--  Colores  -->
+            <Color x:Key="White">#FFFFFF</Color>
+            <Color x:Key="WhiteDark">#F8F8F8</Color>
+            <Color x:Key="Black">#000000</Color>
+            <Color x:Key="GreyLighter">#EEEEEE</Color>
+            <Color x:Key="GreyLight">#CCCCCC</Color>
+            <Color x:Key="Grey">#999999</Color>
+            <Color x:Key="GreyDark">#555555</Color>
+            <Color x:Key="GreyDarker">#333333</Color>
+            <Color x:Key="RedDark">#BE0000</Color>
+            <Color x:Key="Red">#DF0000</Color>
+            <Color x:Key="RedLight">#C82626</Color>
+            <Color x:Key="RedLighter">#EF8282</Color>
+            <Color x:Key="Orange">#FF8000</Color>
+            <Color x:Key="Green">#158915</Color>
+            <Color x:Key="GreenLight">#DEF0DD</Color>
+            <Color x:Key="BlueFacebook">#2C4B95</Color>
+            <Color x:Key="Transparent">Transparent</Color>
+
+            <Color x:Key="HeaderColor">#ACACAC</Color>
+            <Color x:Key="FooterColor">#EBEBEB</Color>
+            <Color x:Key="PlainButtonColor">#EBEBEB</Color>
+
+            <!--  Tamaños de fuente  -->
+            <x:Int32 x:Key="TextSize-XXS">11</x:Int32>
+            <x:Int32 x:Key="TextSize-XS">12</x:Int32>
+            <x:Int32 x:Key="TextSize-S">14</x:Int32>
+            <x:Int32 x:Key="TextSize-M">16</x:Int32>
+            <x:Int32 x:Key="TextSize-L">18</x:Int32>
+            <x:Int32 x:Key="TextSize-XL">24</x:Int32>
+            <x:Int32 x:Key="TextSize-Headline">30</x:Int32>
+            <x:Double x:Key="FontSize-XS">12</x:Double>
+            <x:Double x:Key="FontSize-S">14</x:Double>
+            <x:Double x:Key="FontSize-M">16</x:Double>
+            <x:Double x:Key="FontSize-L">18</x:Double>
+            <x:Double x:Key="FontSize-XL">24</x:Double>
+            <x:Double x:Key="FontSize-Headline">30</x:Double>
+
+            <!--  Tamaños de iconos  -->
+            <x:Double x:Key="IconSize-M">20</x:Double>
+            <x:Double x:Key="IconSize-L">30</x:Double>
+            <x:Double x:Key="IconSize-XL">40</x:Double>
+
+            <!--  Genericos de botones y contenedores  -->
+            <x:Double x:Key="ButtonHeight">44</x:Double>
+            <x:Int32 x:Key="ButtonBorderRadius">5</x:Int32>
+            <x:Double x:Key="ButtonBorderWidth">1</x:Double>
+            <Thickness x:Key="ContainerBorderWidth">1</Thickness>
+            <x:Double x:Key="SeparatorHeight">1</x:Double>
+            <x:Double x:Key="SeparatorHeightBig">2</x:Double>
+            <x:Double x:Key="CarouselWidth">0.8</x:Double>
+            <x:Double x:Key="CarouselHeight">0.3</x:Double>
+
+            <Style x:Key="Font-Default"
+             TargetType="Label">
+                <Setter Property="FontFamily"
+                Value="{StaticResource Font}" />
+            </Style>
+            <!--  Fuentes: Regular  -->
+            <Style x:Key="Font-Regular"
+             BasedOn="{StaticResource Font-Default}"
+             TargetType="Label">
+                <Setter Property="FontFamily"
+                Value="{StaticResource Font}" />
+            </Style>
+
+            <!--  Fuentes: Bold  -->
+            <Style x:Key="Font-Bold"
+             BasedOn="{StaticResource Font-Default}"
+             TargetType="Label">
+                <Setter Property="FontFamily"
+                Value="{StaticResource Font}" />
+            </Style>
+
+
+
+            <!--  Botones: Propiedades por defecto  -->
+            <Style x:Key="ButtonBase"
+             TargetType="Button">
+                <Setter Property="BorderRadius"
+                Value="{StaticResource ButtonBorderRadius}" />
+                <Setter Property="FontSize"
+                Value="{StaticResource FontSize-L}" />
+                <Setter Property="HeightRequest"
+                Value="{StaticResource ButtonHeight}" />
+            </Style>
+
+            <!--  Botones: Primario  -->
+            <Style x:Key="ButtonPrimary"
+             BasedOn="{StaticResource ButtonBase}"
+             TargetType="Button">
+                <Setter Property="BackgroundColor"
+                Value="{StaticResource Red}" />
+                <Setter Property="FontFamily"
+                Value="{StaticResource Font}" />
+                <Setter Property="TextColor"
+                Value="{StaticResource White}" />
+            </Style>
+            
+            <Style TargetType="NavigationPage" >
+                <Setter Property="BarBackgroundColor" Value="{StaticResource GreyDark}" />
+                <Setter Property="BarTextColor" Value="{StaticResource Black}"/>
+                <Setter Property="Tint" Value="{StaticResource GreyDark}" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

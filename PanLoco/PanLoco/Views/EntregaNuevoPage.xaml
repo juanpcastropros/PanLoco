@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="PanLoco.Views.EntregaNuevoPage"
+		Title="Registrar Entrega">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Imprimir" Clicked="Save_Clicked" />
+        <ToolbarItem Text="Cancelar" Clicked="Close_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="plainButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#eee"/>
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="BorderRadius" Value="0"/>
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+            <Style x:Key="plainText" TargetType="Picker">
+                <Setter Property="BackgroundColor" Value="Black"/>
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+            <Style x:Key="darkerButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#ddd"/>
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="BorderRadius" Value="0"/>
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+            <Style x:Key="orangeButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#E8AD00"/>
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BorderRadius" Value="0"/>
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+
+
+        <Grid ColumnSpacing="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                
+            </Grid.ColumnDefinitions>
+            <!--ROW 0-->
+            <Label Text="Cliente" FontSize="Small" VerticalTextAlignment="Center"
+                   Grid.Row="0" Grid.Column="0" />
+            <Label Text="Seleccionar Cliente" FontSize="Small" x:Name="ClienteChoiced" BackgroundColor="LightGray" TextColor="Black"
+                   Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" >
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="PickerLabel_OnTapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <Picker IsVisible="False" ItemsSource="{Binding ItemMaster.Clientes}" Style="{StaticResource plainText}"
+                    Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="ClienteSelected"  SelectedIndexChanged="ClienteSelected_SelectedIndexChanged" >
+            </Picker>
+            <!-- ROW 2-->
+
+            <Label Text="Sub Total: " FontSize="Small" VerticalTextAlignment="Center"
+                   Grid.Row="1" Grid.Column="0" />
+            <Label Text=" " FontSize="Small" VerticalTextAlignment="Center" x:Name="SubTotalAmount"
+                   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" />
+            <!--Row 3-->
+            <Label Text="Descuento" FontSize="Small" VerticalTextAlignment="Center"
+                   Grid.Row="2" Grid.Column="0" />
+            <Entry Text="0" Keyboard="Numeric" FontSize="Small" Margin="0" x:Name="Discount"
+                   Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
+            <Label Text="Total: " FontSize="Small" VerticalTextAlignment="Center"
+                   Grid.Row="3" Grid.Column="0" />
+            <Label Text=" " FontSize="Small" VerticalTextAlignment="Center" x:Name="TotalAmount"
+                   Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" />
+            <!--Row 4-->
+            <Label Text="Lista de Productos" FontSize="Small" VerticalTextAlignment="Center"
+                   Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" />
+            <Button Text=" + " Style="{StaticResource orangeButton}" Clicked="AddProducto_click"
+                    Grid.Row="4" Grid.Column="2" ></Button>
+            <!--Row 5-->
+            <ListView Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" x:Name="listaProductos" ItemsSource="{Binding iVendidos}" ItemSelected="lstItemVendidos_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="Editar_Clicked" CommandParameter="{Binding .}"
+               Text="Editar" />
+                                <MenuItem Clicked="Borrar_Clicked" CommandParameter="{Binding .}"
+               Text="Borrar" IsDestructive="True" />
+                            </ViewCell.ContextActions>
+                            <ViewCell.View>
+                                <StackLayout Orientation="Vertical">
+                                    <StackLayout Orientation="Horizontal" >
+                                        <Label Text="{Binding Tipo}" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"></Label>
+                                        <Label Text=" - " HorizontalTextAlignment="Start" VerticalTextAlignment="Center"></Label>
+                                        <Label Text="{Binding Producto.Codigo}" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"></Label>
+                                        <Label Text=" - " HorizontalTextAlignment="Start" VerticalTextAlignment="Center"></Label>
+                                        <Label Text="{Binding Producto.Nombre}" ></Label>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" >
+                                        <Label Text="{Binding Cantidad}" HorizontalTextAlignment="Start"></Label>
+                                        <Label Text="x"  HorizontalTextAlignment="Start"></Label>
+                                        <Label Text="{Binding PrecioUnitario}"  HorizontalTextAlignment="Start"></Label>
+                                        <Label Text="{Binding SubTotal}" HorizontalOptions="EndAndExpand"></Label>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+            </ListView>
+            
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

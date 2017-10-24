@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PanLoco.Views.Perfil.PerfilView">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Guardar" Clicked="ToolbarItem_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+            <TableView>
+                <TableRoot>
+                    <TableSection Title="Principal">
+                        <EntryCell Label="Nombre Completo: " Text="{Binding Item.FullName}" />
+                        <EntryCell Label="Cuil: " Text="{Binding Item.Cuil}" />
+                        <EntryCell Label="Calle: " Text="{Binding Item.Calle}" />
+                        <EntryCell Label="Localidad: " Text="{Binding Item.Localidad}" />
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PanLoco.Views.EntregaAddProducto">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Guardar" Clicked="Guardar_Clicked" />
+        <ToolbarItem Text="Eliminar" Clicked="Eliminar_Clicked" />
+        <ToolbarItem Text="Cancelar" Clicked="Cerrar_Clicked_1" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <TableView>
+            <TableRoot>
+                <TableSection Title="Producto" >
+                    <EntryCell Label="Producto: " Text="" PropertyChanged="ProdcutoSrc_PropertyChanged" x:Name="ProdcutoSrc" ></EntryCell>
+                    <EntryCell Label="Cantidad: " Keyboard="Numeric" Text="{Binding Cantidad}" PropertyChanged="ProdCtaSrc_PropertyChanged" x:Name="ProdCtaSrc"  ></EntryCell>
+                    <TextCell Text="" x:Name="ProductoSelected" TextColor="Black"  ></TextCell>
+                    <SwitchCell Text="Devolcuión" x:Name="SC_Devolucion" OnChanged="SC_Devolucion_OnChanged" On="{Binding item.Devolucion}"></SwitchCell>
+                    <SwitchCell Text="Oferta" x:Name="SC_Oferta" OnChanged="SC_Oferta_OnChanged" On="{Binding item.Oferta}"></SwitchCell>
+                    <EntryCell Label="Sub Total: " Text="" x:Name="SubTotal" ></EntryCell>
+                </TableSection>
+                <TableSection Title="Acción">
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal">
+                            <Button Text="Agregar" IsEnabled="False" Clicked="Guardar_Clicked" FontSize="Default" x:Name="cta_agregar" ></Button>
+                            <Button Text="Eliminar" IsEnabled="False" Clicked="Eliminar_Clicked" FontSize="Default" x:Name="cta_eliminar" ></Button>
+                            <Button Text="Cerrar" Clicked="Cerrar_Clicked_1" FontSize="Default" ></Button>
+                        </StackLayout>
+                    </ViewCell>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+
+
+        
+
+    </ContentPage.Content>
+</ContentPage>

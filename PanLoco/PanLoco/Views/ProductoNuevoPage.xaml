@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="PanLoco.Views.ProductoNuevoPage"
+		Title="Producto">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Guardar" Clicked="Save_Clicked" />
+        <ToolbarItem Text="Eliminar" Clicked="cta_eliminar_Clicked" />
+    </ContentPage.ToolbarItems>
+
+<ContentPage.Content>
+        <ScrollView>
+            <TableView>
+                <TableRoot>
+                    <TableSection Title="Principal">
+                        <EntryCell Label="Código: " Text="{Binding Item.Codigo}" />
+                        <EntryCell Label="Nombre: " Text="{Binding Item.Nombre}" />
+                    </TableSection>
+                    <TableSection Title="Precios">
+                        <EntryCell Label="Precio Regular: " Keyboard="Numeric" Text="{Binding Item.PrecioUnitario}" />
+                        <EntryCell Label="Precio De Oferta: " Keyboard="Numeric" Text="{Binding Item.PrecioOferta}" />
+                        <EntryCell Label="Precio De Mayorista: " Keyboard="Numeric" Text="{Binding Item.PrecioMayorista}" />
+                    </TableSection>
+                    <TableSection Title="Stock y Costo">
+                        <EntryCell Label="Costo: " Keyboard="Numeric" Text="{Binding Item.CostoUnitario}" />
+                        <EntryCell Label="Stock: " Keyboard="Numeric" Text="{Binding Item.Stock}" />
+                    </TableSection>
+                    <TableSection Title="Acción">
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Button Text="Agregar" IsEnabled="True" Clicked="Save_Clicked" FontSize="Default" x:Name="cta_agregar" ></Button>
+                                <Button Text="Eliminar" IsEnabled="False" Clicked="cta_eliminar_Clicked" FontSize="Default" x:Name="cta_eliminar" ></Button>
+                                <!--<Button Text="Cerrar" Clicked="Cerrar_Clicked_1" FontSize="Default" ></Button>-->
+                            </StackLayout>
+                        </ViewCell>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+		
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

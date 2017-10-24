@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PanLoco.Views.Acordeon.MainPageA"
+             xmlns:pages="clr-namespace:PanLoco.Views.Acordeon;assembly=PanLoco"
+            xmlns:subpages="clr-namespace:PanLoco.Views;assembly=PanLoco">
+    <MasterDetailPage.Master>
+        <pages:MainPageAMaster x:Name="MasterPage" />
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <subpages:EntregasListPage/>
+
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>

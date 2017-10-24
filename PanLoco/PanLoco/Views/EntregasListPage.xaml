@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PanLoco.Views.EntregasListPage"
+             Title="Entregas">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Nueva" Clicked="AddItem_Clicked" />
+        <ToolbarItem Text="Nuevo Día" Clicked="NuevoDia_Clicked" />
+        <ToolbarItem Text="Print" Clicked="ToolbarItem_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+
+            <StackLayout Padding="10">
+                <ListView x:Name="ItemsListView"
+				ItemsSource="{Binding Items}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true"
+                RefreshCommand="{Binding LoadItemsCommand}"
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                CachingStrategy="RecycleElement"
+				ItemSelected="OnItemSelected">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Orientation="Vertical">
+                                <StackLayout Padding="10" Orientation="Horizontal">
+                                    <Label Text="{Binding ClienteNombre}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13"/>
+                                            <Label Text="{Binding Total}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13"/>
+                                        </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Fecha}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13"/>
+                                    </StackLayout>
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
