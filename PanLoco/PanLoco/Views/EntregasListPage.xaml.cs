@@ -116,7 +116,7 @@ namespace PanLoco.Views
                     Entrega ent = (Entrega)this.ItemsListView.SelectedItem;
                     if (ent != null)
                     {
-                        ent = await App.EntregaDB.GetItemAsync(ent.Id);
+                        ent = App.EntregaDB.GetItem(ent.Id);
                         await Navigation.PushModalAsync(new Printing.PrinterContainer(ent));
                     }
                 }

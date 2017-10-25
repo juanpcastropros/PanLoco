@@ -24,7 +24,7 @@ namespace PanLoco.Models
         {
             get {
                 if (clienteID > 0)
-                    cliente = App.ClienteDB.GetItemAsync(clienteID).Result;
+                    cliente = App.ClienteDB.GetItem(clienteID);
                 return cliente; }
             set {
                 cliente = value;

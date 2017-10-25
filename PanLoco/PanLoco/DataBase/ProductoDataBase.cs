@@ -101,7 +101,7 @@ namespace PanLoco.DataBase
             {
                 //rt = database.InsertAsync(item);
                 rt = database.GetConnection().Insert(item);
-                item.Id = rt;
+                //item.Id = rt;
             }
             UpdateInternalCollection(item);
             return rt;

@@ -11,7 +11,7 @@ namespace PanLoco.Models
         public List<string> Clientes
         { get {
                 List<string> temp = new List<string>();
-                var list = App.ClienteDB.GetItemsNotDoneAsync().Result;
+                var list = App.ClienteDB.GetItemsNotDoneSync();
 
                 foreach (Cliente c in list)
                     temp.Add(string.Concat("[",c.Id,"] ", c.NombreDeFantasia));

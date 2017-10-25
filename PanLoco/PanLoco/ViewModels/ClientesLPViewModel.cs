@@ -27,16 +27,16 @@ namespace PanLoco.ViewModels
             {
                 var _item = item as Cliente;
                 //Items.Add(_item);
-                await App.ClienteDB.SaveItemAsync(_item);//DataStore.AddItemAsync(_item);
-                Items.ReplaceRange(App.ClienteDB.GetItemsAsync().Result);
+                App.ClienteDB.SaveItem(_item);//DataStore.AddItemAsync(_item);
+                Items.ReplaceRange(App.ClienteDB.GetItems());
                 //LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             });
             MessagingCenter.Subscribe<ClienteNuevoPage, Cliente>(this, "DeleteItem", async (obj, item) =>
             {
                 var _item = item as Cliente;
                 //Items.Remove(_item);
-                await App.ClienteDB.DeleteItemAsync(_item);//DataStore.DeleteItemAsync(_item);
-                Items.ReplaceRange(App.ClienteDB.GetItemsAsync().Result);
+                 App.ClienteDB.DeleteItem(_item);//DataStore.DeleteItemAsync(_item);
+                Items.ReplaceRange(App.ClienteDB.GetItems());
                 //LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             });
         }
@@ -51,7 +51,7 @@ namespace PanLoco.ViewModels
             try
             {
                 Items.Clear();
-                var items = await App.ClienteDB.GetItemsAsync();//DataStore.GetItemsAsync(true);
+                var items = App.ClienteDB.GetItems();//DataStore.GetItemsAsync(true);
                 Items.ReplaceRange(items);
             }
             catch (Exception ex)

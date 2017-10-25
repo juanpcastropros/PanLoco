@@ -32,7 +32,7 @@ namespace PanLoco.ViewModels
                 {
                     var _item = item as Entrega;
                     //if(await (DataStore as EntregasDataSource).AddItemAsync(_item,obj._stock ))
-                    if ( await App.EntregaDB.SaveItemAsync(_item, obj._stock))
+                    if ( await App.EntregaDB.SaveItem(_item, obj._stock))
                     {
                         Items.Add(_item);
                         //Items = Items.OrderByDescending(i => i.Fecha);

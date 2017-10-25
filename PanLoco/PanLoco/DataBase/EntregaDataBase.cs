@@ -20,8 +20,8 @@ namespace PanLoco.DataBase
             try
             {
                 database = new SQLiteAsyncConnection(dbPath);
-                database.CreateTableAsync<Entrega>(CreateFlags.AutoIncPK).Wait();
-                database.CreateTableAsync<EntregaItemVendido>(CreateFlags.AutoIncPK).Wait();
+                database.GetConnection().CreateTable<Entrega>(CreateFlags.AutoIncPK);
+                database.GetConnection().CreateTable<EntregaItemVendido>(CreateFlags.AutoIncPK);
             }
             catch (Exception ex)
             {
@@ -34,9 +34,9 @@ namespace PanLoco.DataBase
             try
             {
                 database = dataBase;
-                database.CreateTableAsync<Entrega>(CreateFlags.AutoIncPK).Wait();
-                database.CreateTableAsync<EntregaItemVendido>(CreateFlags.AutoIncPK).Wait();
-                internallCollection = getItemsAsync().Result;
+                database.GetConnection().CreateTable<Entrega>(CreateFlags.AutoIncPK);
+                database.GetConnection().CreateTable<EntregaItemVendido>(CreateFlags.AutoIncPK);
+                internallCollection = getItems();
             }
             catch (Exception ex)
             {
@@ -52,61 +52,32 @@ namespace PanLoco.DataBase
         }
         public Task<List<Entrega>> RefreshForce()
         {
-            internallCollection = getItemsAsync().Result;
+            internallCollection = getItems();
             return Task.FromResult(internallCollection);
         }
-        private Task<List<Entrega>> getItemsAsync()
+        private List<Entrega> getItems()
         {
-            return database.Table<Entrega>().OrderByDescending(s => s.Fecha).ToListAsync();
+            return database.GetConnection().Table<Entrega>().OrderByDescending(s => s.Fecha).ToList();
         }
-        public Task<List<Entrega>> GetItemsAsync()
+        public Task<List<Entrega>> GetItems()
         {
             return Task.FromResult(internallCollection);
         }
-
-        public Task<List<Entrega>> GetItemsNotDoneAsync()
+        
+        public List<Entrega> GetItemsNotDoneSync()
         {
-            return database.QueryAsync<Entrega>("SELECT * FROM [Entrega] order by [FECHA] desc");
+            return database.GetConnection().Query<Entrega>("SELECT * FROM [Entrega] order by [FECHA] desc");
         }
 
-        public Task<Entrega> GetItemAsync(int id)
+        public Entrega GetItem(int id)
         {
             try
             {
-                //var o = database.Table<EntregaItemVendido>().Where(t => t.EntregaId==id).ToListAsync();
-                var rt = database.Table<Entrega>().Where(i => i.Id == id).FirstOrDefaultAsync();
-                //= database.Table<EntregaItemVendido>().ToListAsync();
-
-                //var p = database.Table<EntregaItemVendido>().("SELECT * FROM [EntregaItemVendido] Where [EntregaID]= " + id).Result;
-
-                //rt.ItemVendidos = p;//database.Table<EntregaItemVendido>().Where(s => s.EntregaId.Equals(id)).ToListAsync().Result;// ("SELECT * FROM [EntregaItemVendido] where [EntregaID] = "+id.ToString()).Result;
-                rt.Result.ItemVendidos = GetItemsVendidos(id);
-                return Task.FromResult(rt.Result);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-
-            }
-            return null;
-        }
-        public Task<Entrega> GetItem(int id)
-        {
-            try
-            {
-                //var tq = database.GetConnection().Table<Entrega>().Single(i => i.Id == id);
-                //var o = database.GetConnection().Table<EntregaItemVendido>().Where(i => i.EntregaId==id).ToList();
-                var tq = database.Table<Entrega>().Where(e => e.Id == id).FirstAsync().Result;
-                if (tq != null)
-                {
-                    throw new Exception("No se encuentra la Entrega");
-                }
-                var o = database.Table<EntregaItemVendido>().Where(eiv => eiv.EntregaId == id).ToListAsync().Result;
-                tq.ItemVendidos = o;
-                return Task.FromResult(tq);
+                
+                var rt = database.GetConnection().Table<Entrega>().Where(i => i.Id == id).FirstOrDefault();
+                
+                rt.ItemVendidos = GetItemsVendidos(id);
+                return rt;
             }
             catch (Exception ex)
             {
@@ -119,34 +90,23 @@ namespace PanLoco.DataBase
             return null;
         }
 
-        public Task<bool> SaveItemAsync(Entrega item, Dictionary<string, int> _stock)
+        public Task<bool> SaveItem(Entrega item, Dictionary<string, int> _stock)
         {
             try
             {
                 database.GetConnection().BeginTransaction();
-                Task<int> result;
+                int result;
                 
                 if (item.Id != 0)
                 {
-                    result = database.UpdateAsync(item);
+                    result = database.GetConnection().Update(item);
                     UpdateInternalCollection(item);
                 }
                 else
                 {
-                    result = database.InsertAsync(item);
+                    result = database.GetConnection().Insert(item);
+                    //item.Id = result;
                     internallCollection.Add(item);
-                }
-                while (!result.Status.Equals(TaskStatus.RanToCompletion))
-                {
-                    if (result.Status.Equals(TaskStatus.Faulted))
-                    {
-                        string msg = string.Empty;
-                        foreach (var ex in result.Exception.InnerExceptions)
-                        {
-                            msg += ex.Message;
-                        }
-                        throw new Exception(msg);
-                    }
                 }
                 foreach (EntregaItemVendido eiv in item.ItemVendidos)
                 {
@@ -181,25 +141,13 @@ namespace PanLoco.DataBase
             return DependencyService.Get<IFileHelper>().ReadEntrega(id);
         }
 
-        //private void SaveItemsVendidos(List<EntregaItemVendido> itemVendidos, int EntregaID)
-        //{
-        //    //var listin = database.QueryAsync<EntregaItemVendido>("DELETE from [EntregaItemVendido] WHERE [EntregaID] = " + EntregaID.ToString()).Result;
-        //    foreach (EntregaItemVendido eiv in itemVendidos)
-        //    {
-        //        eiv.EntregaId = EntregaID;
-        //    }
-        //    var result = database.InsertAllAsync(itemVendidos);
-        //    //throw new NotImplementedException();
-        //    ///TODO: guardar los item vendidos.
-        //}
-
-        public Task<int> DeleteItemAsync(Entrega item)
+        public int DeleteItemAsync(Entrega item)
         {
             try
             {
                 database.GetConnection().BeginTransaction();
 
-                var rt = database.DeleteAsync(item);
+                var rt = database.GetConnection().Delete(item);
                 internallCollection.Remove(item);
                 database.GetConnection().Commit();
                 return rt;
@@ -207,7 +155,7 @@ namespace PanLoco.DataBase
             catch
             {
                 database.GetConnection().Rollback();
-                return Task.FromResult(-1);
+                return -1;
             }
 
         }
@@ -219,10 +167,10 @@ namespace PanLoco.DataBase
                 //database.GetConnection().DropTable<Entrega>();
                 //database.GetConnection().DropTable<EntregaItemVendido>();
                 //database.GetConnection().Commit();
-                database.DropTableAsync<Entrega>().Wait();
-                database.DropTableAsync<EntregaItemVendido>().Wait();
-                database.CreateTableAsync<Entrega>(CreateFlags.AutoIncPK).Wait();
-                database.CreateTableAsync<EntregaItemVendido>(CreateFlags.AutoIncPK).Wait();
+                database.GetConnection().DropTable<Entrega>();
+                database.GetConnection().DropTable<EntregaItemVendido>();
+                database.GetConnection().CreateTable<Entrega>(CreateFlags.AutoIncPK);
+                database.GetConnection().CreateTable<EntregaItemVendido>(CreateFlags.AutoIncPK);
                 DependencyService.Get<IFileHelper>().DeleteFiles();
                 return true;
             }

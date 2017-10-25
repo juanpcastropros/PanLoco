@@ -15,7 +15,7 @@ namespace PanLoco.DataBase
             try
             {
                 database = new SQLiteAsyncConnection(dbPath);
-                database.CreateTableAsync<Cliente>(CreateFlags.None).Wait();
+                database.GetConnection().CreateTable<Cliente>(CreateFlags.None);
             }
             catch(Exception ex)
             {
@@ -27,7 +27,7 @@ namespace PanLoco.DataBase
             try
             {
                 database = dataBase;
-                database.CreateTableAsync<Cliente>(CreateFlags.None).Wait();
+                database.GetConnection().CreateTable<Cliente>(CreateFlags.None);
             }
             catch (Exception ex)
             {
@@ -39,32 +39,39 @@ namespace PanLoco.DataBase
         {
             return database.Table<Cliente>().ToListAsync();
         }
-
-        public Task<List<Cliente>> GetItemsNotDoneAsync()
+        public List<Cliente> GetItems()
         {
-            return database.QueryAsync<Cliente>("SELECT * FROM [Cliente]");
+            //return database.GetConnection().Table<Cliente>.ToList();
+            return GetItemsNotDoneSync();
+        }
+        
+        public List<Cliente> GetItemsNotDoneSync()
+        {
+            return database.GetConnection().Query<Cliente>("SELECT * FROM [Cliente]");
         }
 
-        public Task<Cliente> GetItemAsync(int id)
+        public Cliente GetItem(int id)
         {
-            return database.Table<Cliente>().Where(i => i.Id == id).FirstOrDefaultAsync();
+            return database.GetConnection().Table<Cliente>().Where(i => i.Id == id).FirstOrDefault();
         }
 
-        public Task<int> SaveItemAsync(Cliente item)
+        public int SaveItem(Cliente item)
         {
             if (item.Id != 0)
             {
-                return database.UpdateAsync(item);
+                return database.GetConnection().Update(item);
             }
             else
             {
-                return database.InsertAsync(item);
+                int i = database.GetConnection().Insert(item);
+                //item.Id = i;
+                return i;
             }
         }
 
-        public Task<int> DeleteItemAsync(Cliente item)
+        public int DeleteItem(Cliente item)
         {
-            return database.DeleteAsync(item);
+            return database.GetConnection().Delete(item);
         }
     }
 }

@@ -7,11 +7,11 @@ using PanLoco.Models;
 
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(PanLoco.Services.EntregasDataSource))]
+[assembly: Dependency(typeof(PanLoco.Services.EEntregasDataSource))]
 
 namespace PanLoco.Services
 {
-    public class EntregasDataSource : IDataStore<Entrega>
+    public class EEntregasDataSource : IDataStore<Entrega>
     {
         bool isInitialized;
         List<Entrega> items;

@@ -186,7 +186,7 @@ namespace PanLoco.ViewModels
         {
 
             Item.ClienteID = GetClienteID(selection);
-            cliente = App.ClienteDB.GetItemAsync(Item.ClienteID).Result;
+            cliente = App.ClienteDB.GetItem(Item.ClienteID);
             Item.ClienteNombre = GetClienteName(selection);
             Item.ClienteDescuento = GetClienteDescuento();
             if (cliente != null)
