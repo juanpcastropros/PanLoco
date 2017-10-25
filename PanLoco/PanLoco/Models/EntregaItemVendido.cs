@@ -19,7 +19,7 @@ namespace PanLoco.Models
         {
             get { return Producto.Id; }
             set {
-               Producto =  App.ProductoDB.GetItemAsync(value).Result;
+               Producto =  App.ProductoDB.GetItem(value);
             }
         }
         double precioUnitario = 0;

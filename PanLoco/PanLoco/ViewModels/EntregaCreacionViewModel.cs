@@ -25,7 +25,7 @@ namespace PanLoco.ViewModels
                     return _rtStock;
                 else
                 {
-                    Producto tmpProd = App.ProductoDB.GetItemAsyncByCode(codigo).Result;
+                    Producto tmpProd = App.ProductoDB.GetItemByCode(codigo).Result;
                     if (tmpProd != null)
                     {
                         this._stock.Add(codigo, tmpProd.Stock);
@@ -153,7 +153,7 @@ namespace PanLoco.ViewModels
             ItemMaster = new EntregaMock();
             Item = new Entrega();
             iVendidos = new ObservableRangeCollection<EntregaItemVendido>();
-            var list = App.ProductoDB.getItemsAsync().Result;
+            var list = App.ProductoDB.GetItems();
             EntregaItemVendido tmp;
             _stock = new Dictionary<string, int>();
             foreach (Producto iv in list)
@@ -218,7 +218,7 @@ namespace PanLoco.ViewModels
             Producto prodReturn = null;
             if (string.IsNullOrEmpty(codigo))
                 return prodReturn;
-            prodReturn = App.ProductoDB.GetItemAsyncByCode(codigo).Result;
+            prodReturn = App.ProductoDB.GetItemByCode(codigo).Result;
             if (prodReturn != null)
             {
                 int tmp = GetStock(prodReturn.Codigo);

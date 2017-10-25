@@ -53,7 +53,7 @@ namespace PanLoco.DataBase
             var prod = GetItemByCode(codigo).Result;
             resutl = string.Concat(resutl, prod.Stock);
             prod.Stock = stock;
-            SaveItemAsync(prod);
+            SaveItem(prod);
             resutl = string.Concat(resutl, " to -> ", prod.Stock);
             return resutl;
             //var re = database.ExecuteAsync("UPDATE [Producto] SET Stock = ? where Codigo = '?'", stock, codigo);
@@ -61,55 +61,33 @@ namespace PanLoco.DataBase
             //var resutl = database.QueryAsync<Producto>("UPDATE [Producto] SET Stock = ? where Codigo = '?'", stock, codigo));
         }
 
-        public Task<List<Producto>> GetItemsAsync()
+        public List<Producto> GetItems()
         {
-            return Task.FromResult(items);
+            return items;
         }
-        public Task<List<Producto>> getItemsAsync()
+       
+        public List<Producto> GetItemsSync()
         {
-            return database.Table<Producto>().ToListAsync();
-        }
-
-        public Task<List<Producto>> GetItemsNotDoneAsync()
-        {
-            return database.QueryAsync<Producto>("SELECT * FROM [Producto] ");
+            return database.GetConnection().Table<Producto>().ToList();
         }
 
-        public Task<Producto> GetItemAsync(int id)
+        public Producto GetItem(int id)
         {
             //return database.Table<Producto>().Where(i => i.Id == id).FirstOrDefaultAsync();
-            return Task.FromResult(items.Where((Producto arg) => arg.Id == id).FirstOrDefault());
+            return items.Where((Producto arg) => arg.Id == id).FirstOrDefault();
         }
-        public Task<Producto> GetItemAsyncByCode(string code)
-        {
-            //return database.Table<Producto>().Where(i => i.Codigo == code).FirstOrDefaultAsync();
-            return Task.FromResult(items.Where((Producto arg) => arg.Codigo == code).FirstOrDefault());
-        }
+
         public Task<Producto> GetItemByCode(string code)
         {
             //return database.Table<Producto>().Where(i => i.Codigo == code).FirstOrDefaultAsync();
             return Task.FromResult(items.Where((Producto arg) => arg.Codigo == code).FirstOrDefault());
         }
-        public Task<Producto> IsCodeExist(string code)
+        public Producto IsCodeExist(string code)
         {
-            return database.Table<Producto>().Where(i => i.Codigo == code).FirstOrDefaultAsync();
+            return database.GetConnection().Table<Producto>().Where(i => i.Codigo == code).FirstOrDefault();
             //return Task.FromResult(items.Where((Producto arg) => arg.Codigo == code).FirstOrDefault());
         }
 
-        public Task<int> SaveItemAsync(Producto item)
-        {
-            Task<int> rt;
-            if (item.Id != 0)
-            {
-                rt=database.UpdateAsync(item);
-            }
-            else
-            {
-                rt=database.InsertAsync(item);
-            }
-            UpdateInternalCollection(item);
-            return rt;
-        }
         public int SaveItem(Producto item)
         {
             int rt=0;
@@ -129,14 +107,14 @@ namespace PanLoco.DataBase
             return rt;
         }
 
-        public Task<int> DeleteItemAsync(Producto item)
+        public int DeleteItem(Producto item)
         {
-            Task<int> resul;
+            int resul=-1;
             try
             {
 
                 database.GetConnection().BeginTransaction();
-                resul =database.DeleteAsync(item);
+                resul =database.GetConnection().Delete(item);
                 database.GetConnection().Commit();
                 items.Remove(item);
                 return resul;
@@ -144,12 +122,12 @@ namespace PanLoco.DataBase
             catch(Exception ex)
             {
                 database.GetConnection().Rollback();
-                return Task.FromResult(-1);
+                return -1;
             }
         }
         private void UpdateInternalCollection(Producto item)
         {
-            var _item = items.Where((Producto arg) => arg.Id == item.Id).FirstOrDefault();
+            var _item = items.Where(predicate: (Producto arg) => arg.Id == item.Id).FirstOrDefault();
             items.Remove(_item);
             items.Add(item);
         }

@@ -36,8 +36,8 @@ namespace PanLoco.ViewModels
                     {
                         Items.Add(_item);
                         //Items = Items.OrderByDescending(i => i.Fecha);
-                        IDataStore<Producto> ProducDS = DependencyService.Get<IDataStore<Producto>>();
-                        ((ProductosDataSource)ProducDS).ForceRefreshCollection();
+                        //IDataStore<Producto> ProducDS = DependencyService.Get<IDataStore<Producto>>();
+                        //((PProductosDataSource)ProducDS).ForceRefreshCollection();
                         //MessagingCenter.Send(this, "Entrega_Creada", resu);
                     }
                     

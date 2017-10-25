@@ -28,7 +28,7 @@ namespace PanLoco.ViewModels.Productos
                     {
                         if (IsNew)
                         {
-                            var temp = App.ProductoDB.IsCodeExist(Item.Codigo).Result;
+                            var temp = App.ProductoDB.IsCodeExist(Item.Codigo);
                             if (temp != null)
                             {
                                 error = "el Código " + Item.Codigo + " ya existe";

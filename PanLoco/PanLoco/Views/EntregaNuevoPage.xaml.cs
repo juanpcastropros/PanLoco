@@ -79,7 +79,7 @@ namespace PanLoco.Views
         {
             if(e.NewTextValue.Trim().Length>3)
             {
-                var prod = App.ProductoDB.GetItemAsyncByCode(e.NewTextValue.Trim()).Result;
+                var prod = App.ProductoDB.GetItemByCode(e.NewTextValue.Trim()).Result;
             }
         }
 

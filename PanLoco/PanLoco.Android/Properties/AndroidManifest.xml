@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.companyname.PanLoco" android:versionCode="1" android:versionName="1.0" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="19" />
+	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="26" />
 	<uses-permission android:name="android.permission.CONTROL_LOCATION_UPDATES" />
 	<uses-permission android:name="android.permission.DELETE_CACHE_FILES" />
 	<uses-permission android:name="android.permission.READ_LOGS" />

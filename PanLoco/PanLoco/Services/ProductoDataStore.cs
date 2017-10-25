@@ -7,11 +7,11 @@ using PanLoco.Models;
 
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(PanLoco.Services.ProductosDataSource))]
+[assembly: Dependency(typeof(PanLoco.Services.PProductosDataSource))]
 
 namespace PanLoco.Services
 {
-    public class ProductosDataSource : IDataStore<Producto>
+    public class PProductosDataSource : IDataStore<Producto>
     {
         bool isInitialized;
         List<Producto> items;
@@ -19,9 +19,9 @@ namespace PanLoco.Services
         public async Task<bool> AddItemAsync(Producto item)
         {
             var newItem = item.Id == 0;
-            await InitializeAsync();
+            await Initialize();
 
-            await App.ProductoDB.SaveItemAsync(item);
+            App.ProductoDB.SaveItem(item);
 
             if(newItem)
                 items.Add(item);
@@ -33,8 +33,8 @@ namespace PanLoco.Services
 
         public async Task<bool> UpdateItemAsync(Producto item)
         {
-            await InitializeAsync();
-            await App.ProductoDB.SaveItemAsync(item);
+            await Initialize();
+            App.ProductoDB.SaveItem(item);
             UpdateInternalCollection(item);
             return await Task.FromResult(true);
         }
@@ -49,8 +49,8 @@ namespace PanLoco.Services
 
         public async Task<bool> DeleteItemAsync(Producto item)
         {
-            await InitializeAsync();
-            await App.ProductoDB.DeleteItemAsync(item);
+            await Initialize();
+            App.ProductoDB.DeleteItem(item);
 
             var _item = items.Where((Producto arg) => arg.Id == item.Id).FirstOrDefault();
             items.Remove(_item);
@@ -58,23 +58,23 @@ namespace PanLoco.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<Producto> GetItemAsync(int id)
+        public Producto GetItem(int id)
         {
-            await InitializeAsync();
-            return await App.ProductoDB.GetItemAsync(id);
+            Initialize();
+            return App.ProductoDB.GetItem(id);
 
             //return await Task.FromResult(items.FirstOrDefault(s => s.Id == id));
         }
         public async Task<Producto> GetItemAsync(string codigo)
         {
-            await InitializeAsync();
+            await Initialize();
 
             return await Task.FromResult(items.FirstOrDefault(s => s.Codigo == codigo));
         }
 
         public async Task<IEnumerable<Producto>> GetItemsAsync(bool forceRefresh = false)
         {
-            await InitializeAsync();
+            await Initialize();
 
             return await Task.FromResult(items);
         }
@@ -84,23 +84,64 @@ namespace PanLoco.Services
             return Task.FromResult(true);
         }
 
-        public async void ForceRefreshCollection()
+        public void ForceRefreshCollection()
         {
             isInitialized = false;
-            await InitializeAsync();
+            Initialize();
         }
         public Task<bool> SyncAsync()
         {
             return Task.FromResult(true);
         }
 
-        public async Task InitializeAsync()
+        public Task Initialize()
         {
             if (isInitialized)
-                return;
-            items = await App.ProductoDB.GetItemsAsync();
-
+                return null;
+            items = App.ProductoDB.GetItems();
+            
             isInitialized = true;
+            return null;
+        }
+
+        Task<bool> IDataStore<Producto>.AddItemAsync(Producto item)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IDataStore<Producto>.UpdateItemAsync(Producto item)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IDataStore<Producto>.DeleteItemAsync(Producto item)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Producto> IDataStore<Producto>.GetItemAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<Producto>> IDataStore<Producto>.GetItemsAsync(bool forceRefresh)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IDataStore<Producto>.InitializeAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IDataStore<Producto>.PullLatestAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IDataStore<Producto>.SyncAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 

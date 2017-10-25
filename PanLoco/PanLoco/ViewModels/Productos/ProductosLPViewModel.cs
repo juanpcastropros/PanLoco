@@ -29,15 +29,15 @@ namespace PanLoco.ViewModels
             MessagingCenter.Subscribe<ProductoNuevoPage, Producto>(this, "AddItem", async (obj, item) =>
             {
                 var _item = item as Producto;
-                await App.ProductoDB.SaveItemAsync(_item);
-                Items.ReplaceRange(App.ProductoDB.GetItemsAsync().Result);
+                App.ProductoDB.SaveItem(_item);
+                Items.ReplaceRange(App.ProductoDB.GetItems());
             });
             MessagingCenter.Subscribe<ProductoViewModelCRUD, Producto>(this, "Producto Eliminado", async (obj, item) =>
             {
                 var _item = item as Producto;
-                await App.ProductoDB.DeleteItemAsync(_item);
+                 App.ProductoDB.DeleteItem(_item);
                 //Items.Remove(_item);
-                Items.ReplaceRange(App.ProductoDB.GetItemsAsync().Result);
+                Items.ReplaceRange(App.ProductoDB.GetItems());
             });
         }
 
@@ -53,7 +53,7 @@ namespace PanLoco.ViewModels
             {
                 Items.Clear();
                 //var items = await DataStore.GetItemsAsync(true);
-                var items = await App.ProductoDB.GetItemsAsync(); 
+                var items =  App.ProductoDB.GetItems(); 
                 Items.ReplaceRange(items);
             }
             catch (Exception ex)
