@@ -169,7 +169,7 @@ namespace PanLoco.Droid.Helper
             {
                 printLine("");
                 lb = lb.Clear();
-                lb.Append("Sub Total Prod");
+                lb.Append("--------------->");
                 lbb = "$ " + subt.ToString("##.##");
                 u = 47 - (lb.Length + lbb.Length);
                 lb.Insert(lb.Length, " ", u);
@@ -284,7 +284,7 @@ namespace PanLoco.Droid.Helper
             {
                 printLine("");
                 lb = lb.Clear();
-                lb.Append("Sub Total Prod");
+                lb.Append("--------------->");
                 lbb = "$ " + subt.ToString("##.##");
                 u = 47 - (lb.Length + lbb.Length);
                 lb.Insert(lb.Length, " ", u);
